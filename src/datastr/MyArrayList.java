@@ -21,6 +21,13 @@ public class MyArrayList {
 		
 	}
 	
-	
 	//funckijas
+	private boolean isEmpty() {
+		return (howManyElements == 0);
+	}
+
+	private boolean isFull() {
+		return (howManyElements == size);
+	}
+
 }
