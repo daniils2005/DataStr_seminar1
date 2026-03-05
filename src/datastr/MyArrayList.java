@@ -1,5 +1,7 @@
 package datastr;
 
+import java.util.ArrayList;
+
 public class MyArrayList {
 	//mainigie
 	private char[] list;
@@ -92,25 +94,41 @@ public class MyArrayList {
 		list[--howManyElements] = ' ';
 	}
 	
-	public char get(int index) {
+	public char get(int index) throws Exception {
+		if(isEmpty()) {
+			throw new Exception("Nav iespejams iegut elementu, jo saraksts ir tukss");
+		}
+		if(index < 0) {
+			throw new IllegalArgumentException("Nav iespejams iegut elementu, jo indekss ir negativs");
+		}
+		if(index >=  howManyElements) {
+			throw new IllegalArgumentException("Nav iespejams iegut elementu, jo indekss parsniedz elementu skaitu");
+		}
 		return list[index];
 	}
 	
-	public int find(char element) {
+	public ArrayList<Integer> find(char element) throws Exception{
+		if(isEmpty()) {
+			throw new Exception("Nav iespejams iegut elementu, jo saraksts ir tukss");
+		}
+		ArrayList<Integer> indexes = new ArrayList<Integer>();
 		int first = 0;
 		int second = howManyElements - 1;
 		while(first <= second) {
-			if(list[first] == element) return first;
-			if(list[second] == element) return second;
+			if(list[first] == element) indexes.add(first);
+			if(list[second] == element) indexes.add(second);
 			first++;
 			second = howManyElements - 1 - first;
 		}
-		return -1;
+		if(indexes.isEmpty()) {
+			throw new Exception("Elements netika atrasts");
+		}
+		return indexes;
 	}
 	
-	public char getNext(char element) throws IllegalArgumentException {
+	public char getNext(char element) throws Exception {
 		if(find(element) == -1) {
-			throw new IllegalArgumentException("Padotais elements netika atrasts");
+			throw new Exception("Padotais elements netika atrasts");
 		}
 		if(find(element) == howManyElements - 1) {
 			throw new IllegalArgumentException("Nakamais elements neeksiste");
