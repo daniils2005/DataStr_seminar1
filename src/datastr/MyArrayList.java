@@ -25,7 +25,7 @@ public class MyArrayList {
 	private boolean isEmpty() {
 		return (howManyElements == 0);
 	}
-	llegalArgumentE
+	
 	private boolean isFull() {
 		return (howManyElements == size);
 	}
@@ -175,7 +175,10 @@ public class MyArrayList {
 		return howManyElements;
 	}
 	
-	public void print() {
+	public void print() throws Exception {
+		if(isEmpty()) {
+			throw new Exception("Saraksts ir turkss, lidz ar to nav iespejams izvadit");
+		}
 		System.out.print("[");
 		for(int i = 0; i < howManyElements; i++) {
 			if(i == howManyElements - 1) {
@@ -185,5 +188,13 @@ public class MyArrayList {
 			}
 		}
 		System.out.print("]");
+	}
+	
+	public void makeEmpty() {
+		list = null;//atkabinu referenci no datiem un tada veida zaudeju datus
+		System.gc();
+		howManyElements = 0;
+		size = DEFAULT_SIZE;
+		list = new char[size];
 	}
 }
