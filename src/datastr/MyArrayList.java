@@ -16,9 +16,7 @@ public class MyArrayList {
 		if(inputSize > 0 && inputSize < 100000) {
 			size = inputSize;
 		}
-		
 		list = new char[size];
-		
 	}
 	
 	//funckijas
@@ -42,6 +40,25 @@ public class MyArrayList {
 		list = newList;
 		size = newSize;
 		System.gc();
+	}
+	
+	public void add(char element) {
+		if(isFull()) {
+			resize();
+		}
+		list[howManyElements] = element;
+		howManyElements++;
 		
+		if(isFull()) resize();
+	}
+	
+	public void add(char element, int index) {
+		if(index < size - 1 && index >= 0) {
+			list[index] = element;
+		}
+	}
+	
+	public char get(int index) {
+		return list[index];
 	}
 }
