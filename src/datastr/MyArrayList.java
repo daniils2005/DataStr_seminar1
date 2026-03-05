@@ -126,14 +126,36 @@ public class MyArrayList {
 		return indexes;
 	}
 	
-	public char getNext(char element) throws Exception {
-		if(find(element) == -1) {
-			throw new Exception("Padotais elements netika atrasts");
+/*	
+	public ArrayList<Character> getNext(char element) throws Exception {
+		ArrayList<Character> nextElements = new ArrayList<Character>();
+		ArrayList<Integer> indexes = find(element);
+		for(var i : indexes) {
+			if(i + 1 < howManyElements) {
+				nextElements.add(list[i + 1]);
+			}
 		}
-		if(find(element) == howManyElements - 1) {
-			throw new IllegalArgumentException("Nakamais elements neeksiste");
+		return nextElements;
+	}
+*/
+	
+	public char[] getNextElements(char element) throws Exception{
+		ArrayList<Integer> arrayListForIndexes = find(element);
+		int howManyNextElements = arrayListForIndexes.size();
+		
+		if(arrayListForIndexes.get(arrayListForIndexes.size() - 1) == howManyElements - 1) {
+			howManyNextElements--;
 		}
-		return list[find(element) + 1];
+		
+		char[] nextElements = new char[howManyNextElements];
+		int indexForNextElementArray = 0;
+		
+		for(int i = 0; i < howManyNextElements; i++) {
+			int nextElementIndex = arrayListForIndexes.get(i) + 1;
+			nextElements[indexForNextElementArray] = list[nextElementIndex];
+			indexForNextElementArray++;
+		}
+		return nextElements;
 	}
 	
 	public void sort() {
