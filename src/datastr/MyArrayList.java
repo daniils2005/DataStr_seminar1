@@ -107,23 +107,33 @@ public class MyArrayList {
 		return list[index];
 	}
 	
-	public ArrayList<Integer> find(char element) throws Exception{
+	public int[] find(char element) throws Exception{
 		if(isEmpty()) {
 			throw new Exception("Nav iespejams iegut elementu, jo saraksts ir tukss");
 		}
-		ArrayList<Integer> indexes = new ArrayList<Integer>();
+		
+		int howManyIndexes = 0;
+		for(var i : list) {
+			if(i == element) {
+				howManyIndexes++;
+			}
+		}
+		
+		int index = 0;
+		int[] indexArray = new int[howManyIndexes];
 		int first = 0;
 		int second = howManyElements - 1;
+		
 		while(first <= second) {
-			if(list[first] == element) indexes.add(first);
-			if(list[second] == element) indexes.add(second);
+			if(list[first] == element) indexArray[index++] = first;
+			if(list[second] == element) indexArray[index++] = second;
 			first++;
 			second = howManyElements - 1 - first;
 		}
-		if(indexes.isEmpty()) {
+		if(index == 0) {
 			throw new Exception("Elements netika atrasts");
 		}
-		return indexes;
+		return indexArray;
 	}
 	
 	public char getNext(char element) throws Exception {
