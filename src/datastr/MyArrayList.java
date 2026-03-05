@@ -4,7 +4,7 @@ public class MyArrayList {
 	//mainigie
 	private char[] list;
 	private int howManyElements = 0;
-	private final int DEFAULT_SIZE = 0;
+	private final int DEFAULT_SIZE = 8;
 	private int size = DEFAULT_SIZE;
 	
 	//konstruktori
@@ -23,7 +23,7 @@ public class MyArrayList {
 	private boolean isEmpty() {
 		return (howManyElements == 0);
 	}
-
+	llegalArgumentE
 	private boolean isFull() {
 		return (howManyElements == size);
 	}
@@ -52,13 +52,98 @@ public class MyArrayList {
 		if(isFull()) resize();
 	}
 	
-	public void add(char element, int index) {
-		if(index < size - 1 && index >= 0) {
-			list[index] = element;
+	public void add(char element, int index) throws IllegalArgumentException {
+		if(index < 0) {
+			throw new IllegalArgumentException("Nav iespejams pievienot elementu, jo indekss ir negativs");
 		}
+		if(index > howManyElements) {
+			throw new IllegalArgumentException("Nav iespejams pieveinot elementu, jo indekss parsniedz elementu skaitu");
+		}
+		if(isFull()) resize();
+		
+		if(index == howManyElements) {
+			add(element);
+			return;
+		}
+		
+		for(int i = howManyElements; i > index; i--) {
+			list[i] = list[i - 1];
+		}
+		
+		list[index] = element;
+		howManyElements++;
+	}
+	
+	public void remove(int index) throws Exception {
+		if(isEmpty()) {
+			throw new Exception("Nav iespejams dzest elementu, jo saraksts ir tukss");
+		}
+		if(index < 0) {
+			throw new IllegalArgumentException("Nav iespejams dzest elementu, jo indekss ir negativs");
+		}
+		if(index >=  howManyElements) {
+			throw new IllegalArgumentException("Nav iespejams dzest elementu, jo indekss parsniedz elementu skaitu");
+		}
+		
+		for(int i = index; i < howManyElements - 1; i++) {
+			list[i] = list[i + 1];
+		}
+		
+		list[--howManyElements] = ' ';
 	}
 	
 	public char get(int index) {
 		return list[index];
+	}
+	
+	public int find(char element) {
+		int first = 0;
+		int second = howManyElements - 1;
+		while(first <= second) {
+			if(list[first] == element) return first;
+			if(list[second] == element) return second;
+			first++;
+			second = howManyElements - 1 - first;
+		}
+		return -1;
+	}
+	
+	public char getNext(char element) throws IllegalArgumentException {
+		if(find(element) == -1) {
+			throw new IllegalArgumentException("Padotais elements netika atrasts");
+		}
+		if(find(element) == howManyElements - 1) {
+			throw new IllegalArgumentException("Nakamais elements neeksiste");
+		}
+		return list[find(element) + 1];
+	}
+	
+	public void sort() {
+		char temp;
+		for(int i = 0; i < howManyElements; i++) {
+			for(int j = i; j < howManyElements; j++) {
+				if(list[i] > list[j]) {
+					temp = list[i];
+					list[i] = list[j];
+					list[j] = temp;
+				}
+			}
+		}
+	}
+	
+	public int getHowManyElements() {
+		return howManyElements;
+	}
+	
+	public void print() {
+		System.out.print("[");
+		for(int i = 0; i < howManyElements; i++) {
+			if(i == howManyElements - 1) {
+				System.out.print(get(i));
+			} else {
+				System.out.print(get(i) + ", ");
+			}
+		}
+		System.out.print("]");
 	}
 }
